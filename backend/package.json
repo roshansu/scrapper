@@ -19,7 +19,6 @@
     "mongoose": "^8.14.2",
     "node-cron": "^3.0.3",
     "nodemailer": "^7.0.3",
-    "nodemon": "^3.1.10",
-    "puppeteer": "^24.8.2"
+    "nodemon": "^3.1.10"
   }
 }
