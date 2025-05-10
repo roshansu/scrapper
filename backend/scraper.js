@@ -2,7 +2,9 @@ const puppeteer = require("puppeteer");
 const Event = require("./models/event");
 
 async function scrapeEvents() {
-  const browser = await puppeteer.launch({ headless: "new" });
+  const browser = await puppeteer.launch({ headless: "new",
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+   });
   const page = await browser.newPage();
   await page.goto("https://www.eventbrite.com.au/d/australia--sydney/events/", {
     waitUntil: "networkidle2",
