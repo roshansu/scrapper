@@ -21,7 +21,7 @@ console.log(userData.isLoggedIn, userData.eventUrl);
 
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/events")
+    axios.get("https://sydneyeventsapi.onrender.com/api/events")
       .then(res => setEvents(res.data))
       .catch(err=>console.log("error ", err));
   }, []);
@@ -40,7 +40,7 @@ console.log(userData.isLoggedIn, userData.eventUrl);
     e.preventDefault();
     setSend("2");
     setLoading(true);
-    const res = await axios.post("http://localhost:5000/api/login", {
+    const res = await axios.post("https://sydneyeventsapi.onrender.com/api/login", {
       email,
       otp
     });
@@ -62,7 +62,7 @@ console.log(userData.isLoggedIn, userData.eventUrl);
     if(email === "")  return alert("Please enter your email");
 
     setSend("1");
-    const res = await axios.post("http://localhost:5000/api/sendotp", {
+    const res = await axios.post("https://sydneyeventsapi.onrender.com/api/sendotp", {
       email
     });
     alert(res.data.msg);
