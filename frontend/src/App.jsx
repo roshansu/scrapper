@@ -39,7 +39,6 @@ console.log(userData.isLoggedIn, userData.eventUrl);
   const handleLogin = async (e) => {
     e.preventDefault();
     setSend("2");
-    setLoading(true);
     const res = await axios.post("https://sydneyeventsapi.onrender.com/api/login", {
       email,
       otp
