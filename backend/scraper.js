@@ -11,7 +11,7 @@ async function scrapeEvents() {
 
     $(".discover-vertical-event-card").each((_, el) => {
       const title = $(el).find("h3").text().trim();
-      const date = $(el).children("p").first().text().trim(); // :scope > p equivalent
+      const date = $(el).children("p").first().text().trim(); 
       const link = $(el).find("a").attr("href");
       const img = $(el).find("img").attr("src");
 
@@ -20,7 +20,6 @@ async function scrapeEvents() {
       }
     });
 
-    // Store in DB
     await Event.deleteMany({});
     await Event.insertMany(events);
 

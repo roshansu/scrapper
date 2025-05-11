@@ -7,7 +7,7 @@ function App() {
   const [page, setPage] = useState(false);
   const [otp, setOtp] = useState();
   const [send, setSend] = useState("0");
-
+  const [loading, setLoading] = useState(true);
 
 const userData = JSON.parse(localStorage.getItem("userData"));
 if(!userData){
@@ -22,7 +22,10 @@ console.log(userData.isLoggedIn, userData.eventUrl);
 
   useEffect(() => {
     axios.get("https://sydneyeventsapi.onrender.com/api/events")
-      .then(res => setEvents(res.data))
+      .then((res) => {
+        setEvents(res.data)
+        setLoading(false);
+      })
       .catch(err=>console.log("error ", err));
   }, []);
 
@@ -66,6 +69,15 @@ console.log(userData.isLoggedIn, userData.eventUrl);
     });
     alert(res.data.msg);
 
+  }
+
+  if(loading){
+    return (
+      <div className="flex flex-col gap-3 justify-center items-center h-screen">
+        <p>Loading data please wait...</p>
+        <i className="fa-solid fa-spinner animate-spin text-4xl text-[#582f0e]"></i>
+      </div>
+    )
   }
 
   return (
