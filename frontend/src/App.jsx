@@ -8,13 +8,14 @@ function App() {
   const [otp, setOtp] = useState();
   const [send, setSend] = useState("0");
   const [loading, setLoading] = useState(true);
+  const [dob, setDob] = useState("");
 
 const userData = JSON.parse(localStorage.getItem("userData"));
 if(!userData){
   console.log("hujefe")
   localStorage.setItem(
     "userData",
-    JSON.stringify({ isLoggedIn: false, eventUrl: ""})
+    JSON.stringify({ eventUrl: ""})
   );
 }
 console.log(userData.isLoggedIn, userData.eventUrl);
@@ -41,6 +42,8 @@ console.log(userData.isLoggedIn, userData.eventUrl);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    console.log(dob)
+    if(!dob) return alert("please enter your dob");
     setSend("2");
     const res = await axios.post("https://sydneyeventsapi.onrender.com/api/login", {
       email,
@@ -54,8 +57,12 @@ console.log(userData.isLoggedIn, userData.eventUrl);
     setOtp("");
 
      if(res.data.status){
-         userData.isLoggedIn = true
-          localStorage.setItem("userData", JSON.stringify(userData));
+          const date = new Date();
+        const dobDate = new Date(dob);
+        const age = date.getFullYear() - dobDate.getFullYear();
+        console.log(age);
+        if (age < 18) return alert("You must be at least 18 years old to access this site.");
+        
         window.location.href = userData.eventUrl;
      }
   }
@@ -124,6 +131,10 @@ console.log(userData.isLoggedIn, userData.eventUrl);
             }}
             value={otp} required={true}
             id="otp" className="p-3 outline-none rounded-md w-[100px] bg-gray-200" placeholder="326872"  type="number" />
+          </div>
+          <div>
+            <label htmlFor="dob">Enter your DOB</label>
+            <input id="dob" onChange={(e)=>setDob(e.target.value)} type="date" />
           </div>
             <button onClick={handleSendOtp} type="button"  className="px-3 mr-3 w-fit py-1 rounded-lg bg-green-800 font-medium text-white">Send otp</button>
             <button type="submit"  className="px-3  w-fit py-1 rounded-lg bg-blue-800 font-medium text-white">Verify otp</button>
